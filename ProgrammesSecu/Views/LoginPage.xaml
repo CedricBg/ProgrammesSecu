@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProgrammesSecu.Views.LoginPage"
+             Shell.FlyoutBehavior="Disabled"
+             BackgroundImageSource="background1.png"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"   
+             Shell.NavBarIsVisible="False"
+             Title="Login Page">
+
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior  Command="{Binding AppearingCommand}" EventName="Appearing" />
+    </ContentPage.Behaviors>
+
+    <VerticalStackLayout>
+        
+        <ActivityIndicator WidthRequest="100" Color="Green"  IsRunning="{Binding IsRunining}" />
+        <VerticalStackLayout Padding="250"  Spacing="20">
+            
+            <Entry Text="{Binding Login}" WidthRequest="200"  FontSize="18" TextColor="LightGray" Placeholder="Identifiant" />
+            <Entry Text="{Binding PassWord}" WidthRequest="200"  IsPassword="True" FontSize="18" TextColor="LightGray" Placeholder="Mot de passe" />
+            <Button Text="Connexion" BackgroundColor="Wheat" FontSize="16" TextColor="#7b8291"  Margin="40" WidthRequest="250" CornerRadius="10" Command="{Binding Path=LoginnCommand}" />
+        </VerticalStackLayout>
+        
+        
+        
+        
+
+    </VerticalStackLayout>
+</ContentPage>

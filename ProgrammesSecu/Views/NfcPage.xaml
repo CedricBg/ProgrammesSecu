@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProgrammesSecu.Views.NfcPage"
+             Title="NfcPage">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="False" IsVisible="False"/>
+    </Shell.BackButtonBehavior>
+
+    <VerticalStackLayout>
+        <Label 
+            Text="NfcPage"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+
+        <Button 
+            Text="Scan"
+            CornerRadius="15"
+            Command="{Binding Path=LogoutCommand}" />
+
+    </VerticalStackLayout>
+</ContentPage>
