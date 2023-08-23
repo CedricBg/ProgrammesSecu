@@ -11,6 +11,7 @@ namespace ProgrammesSecu
             Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
             Routing.RegisterRoute(nameof(DashboardPage), typeof(DashboardPage));
             Routing.RegisterRoute(nameof(NfcPage), typeof(NfcPage));
+            Routing.RegisterRoute(nameof(ServerPage), typeof(ServerPage));
         }
 
     }

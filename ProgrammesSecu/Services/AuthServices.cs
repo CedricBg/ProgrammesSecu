@@ -9,6 +9,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using ProgrammesSecu.Helpers;
+using static System.Net.WebRequestMethods;
 
 namespace ProgrammesSecu.Services;
 
@@ -24,8 +25,6 @@ public class AuthServices
 
     public AuthServices(BearerToken httpClient)
     {
-
-        _url = "https://www.mesprogrammes.eu/api";
         _serializerOptions = new JsonSerializerOptions
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -40,7 +39,12 @@ public class AuthServices
     {
         try
         {
-            SecureStorage.Default.RemoveAll();
+            SecureStorage.Default.Remove("token");
+            SecureStorage.Default.Remove("role");
+            SecureStorage.Default.Remove("surName");
+            SecureStorage.Default.Remove("firstName");
+            SecureStorage.Default.Remove("id");
+
             await Shell.Current.GoToAsync(nameof(LoginPage));
         }
         catch(Exception ex) 
@@ -75,6 +79,7 @@ public class AuthServices
     public async Task<bool> Login(LoginForm form)
     {
         ConnectedForm connectedForm = new ConnectedForm();
+        _url = "https://www."+await SecureStorage.Default.GetAsync("server")+"/api";
         HttpClient client = await _httpClient.GetClient();
         try
         {

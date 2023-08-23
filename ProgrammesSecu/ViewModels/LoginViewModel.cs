@@ -1,7 +1,7 @@
 ﻿using ProgrammesSecu.Models.Auth;
 using ProgrammesSecu.Services;
 using ProgrammesSecu.Views;
-
+using System.Diagnostics;
 
 namespace ProgrammesSecu.ViewModels;
 
@@ -23,7 +23,10 @@ public partial class LoginViewModel: BaseViewModel
         _authServices = authServices;
         _connectivityServices = connectivityServices;
     }
-
+    /// <summary>
+    /// Vérifie si les champs de formulaire sont vide ou null
+    /// </summary>
+    /// <returns></returns>
     async Task<bool> CheckForm()
     {
         if (PassWord == null || PassWord == "")
@@ -38,9 +41,9 @@ public partial class LoginViewModel: BaseViewModel
         }
         return true;
     }
-
+    //Fonction qui sert pour la connexion
     [RelayCommand]
-    async void Loginn()
+    async Task Loginn()
     { 
         if(await _connectivityServices.Test() == false)
             return;
@@ -52,23 +55,40 @@ public partial class LoginViewModel: BaseViewModel
         IsRunining = true;
         if(await _authServices.Login(form))
             await Shell.Current.GoToAsync(nameof(DashboardPage));
-
         PassWord = "";
         IsRunining = false;
     }
 
+    /// <summary>
+    /// OnAppearing déplacé de LoginPage.cs vers le ViewModel fait usage de "Community toolkit Maui"
+    /// </summary>
     [RelayCommand]
-    void Appearing()
+    async Task Appearing()
     {
         try
         {
-
-            Shell.Current.DisplayAlert("Ok", "Test", "ok");
-
+            string response = await SecureStorage.Default.GetAsync("token");
+       
+            if (!(response is null))
+            {
+                await Shell.Current.GoToAsync(nameof(DashboardPage));
+            }
+            CheckServer();
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine(ex.ToString());
+            await Shell.Current.DisplayAlert("Error", ex.Message ,"Ok");
+        }
+
+    }
+    public async void CheckServer()
+    {
+        string response = await SecureStorage.Default.GetAsync("server");
+        Debug.WriteLine(response);
+        if (response is null)
+        {
+            await Shell.Current.GoToAsync(nameof(ServerPage));
+            return;
         }
     }
 }
