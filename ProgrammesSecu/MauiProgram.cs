@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using CommunityToolkit.Maui;
+using Microsoft.Extensions.Logging;
 using ProgrammesSecu.Helpers;
 using ProgrammesSecu.Services;
 using ProgrammesSecu.ViewModels;
@@ -13,6 +14,7 @@ namespace ProgrammesSecu
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -30,10 +32,10 @@ namespace ProgrammesSecu
             builder.Services.AddSingleton<ServerPageViewModel>();
 
             builder.Services.AddSingleton<HttpClient>();
-            builder.Services.AddSingleton<DataAccesServices>();
-            builder.Services.AddSingleton<ConnectivityServices>();
+            builder.Services.AddSingleton<AgentService>();
+            builder.Services.AddScoped<ConnectivityServices>();
             builder.Services.AddSingleton<AuthServices>();
-            builder.Services.AddSingleton<BearerToken>();
+            builder.Services.AddTransient<BearerToken>();
 
 
 

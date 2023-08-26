@@ -45,6 +45,7 @@ public class AuthServices
             SecureStorage.Default.Remove("firstName");
             SecureStorage.Default.Remove("id");
 
+
             await Shell.Current.GoToAsync(nameof(LoginPage));
         }
         catch(Exception ex) 

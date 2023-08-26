@@ -4,21 +4,47 @@
              x:Class="ProgrammesSecu.Views.DashboardPage"
              Shell.NavBarIsVisible="True"
              Shell.BackgroundColor="{StaticResource Tertiary}"
-             
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"  
              FlyoutItem.IsVisible="True">
+
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior  Command="{Binding AppearingCommand}" EventName="Appearing" />
+    </ContentPage.Behaviors>
 
     <Shell.BackButtonBehavior>
         <BackButtonBehavior IsEnabled="False" IsVisible="False"/>
     </Shell.BackButtonBehavior>
 
-    <ContentPage.ToolbarItems  >
-
-        <ToolbarItem Text="Déconnexion" Command="{Binding LogoutCommand}">
-
-        </ToolbarItem>
+    <ContentPage.ToolbarItems >
+        <ToolbarItem Text="Déconnexion" Command="{Binding LogoutCommand}" />
     </ContentPage.ToolbarItems>
     
-    <VerticalStackLayout Margin="10">
+    <VerticalStackLayout >
+        
+        <HorizontalStackLayout 
+            Margin="10"
+            Spacing="20" 
+            HorizontalOptions="Center"
+            VerticalOptions="Center">
+            <Border StrokeShape="RoundRectangle 60"
+                   Stroke="#fff" 
+                    HeightRequest="100"
+                    WidthRequest="100">
+                <Image Source="{Binding Images}" 
+                           HeightRequest="120"
+                            WidthRequest="120"/>
+
+            </Border>
+            <Label Text="{Binding Isworking}" 
+                    HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       VerticalTextAlignment="Center"
+                       HorizontalTextAlignment="Center"
+                    HeightRequest="100"
+                    WidthRequest="220"
+                    />
+        </HorizontalStackLayout>
+        
         <Grid RowSpacing="20">
             <Grid.RowDefinitions  >
                 <RowDefinition Height="100" />
@@ -30,13 +56,13 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Button   BackgroundColor="DimGrey" 
-               Text="Prise de service"
-                      CornerRadius="45"
-               HorizontalOptions="Center"
-               VerticalOptions="Center"
-                      HeightRequest="100"
-                      WidthRequest="150"/>
+                <Label  BackgroundColor="DimGrey" 
+                   Text="Prise de service"
+                          
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                          HeightRequest="100"
+                          WidthRequest="150"/>
 
             <Button  Grid.Column="1"
                Text="Planning"

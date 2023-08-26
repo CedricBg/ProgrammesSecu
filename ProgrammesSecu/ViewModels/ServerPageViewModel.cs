@@ -1,5 +1,7 @@
 ﻿
+using ProgrammesSecu.Services;
 using ProgrammesSecu.Views;
+using System.Diagnostics;
 using System.Net.Http;
 
 namespace ProgrammesSecu.ViewModels;
@@ -11,22 +13,36 @@ public partial class ServerPageViewModel: BaseViewModel
     [ObservableProperty]
     string server;
 
+    ConnectivityServices _connect;
+
     string _url;
-    HttpClient _httpClient = new HttpClient();
+    HttpClient _httpClient;
+    public ServerPageViewModel(ConnectivityServices connectivity, HttpClient httpClient)
+    {
+        _httpClient = httpClient;
+        _connect = connectivity;
+    }
 
     [RelayCommand]
     async Task  SetServer()
     {
+
         if(!(Server == string.Empty || Server == ""))
         {
-
             try
             {
-                _url = "https://www." + Server + "/api";
-                HttpResponseMessage response = await _httpClient.GetAsync(_url);
-                await SecureStorage.Default.SetAsync("server", Server);
-                await Shell.Current.GoToAsync(nameof(LoginPage));
-                return;
+                if(!await _connect.Test())
+                {
+                    return;
+                }
+                else
+                {
+                    _url = "https://www." + Server + "/api";
+                    HttpResponseMessage response = await _httpClient.GetAsync(_url);
+                    await SecureStorage.Default.SetAsync("server", Server);
+                    await Shell.Current.GoToAsync(nameof(LoginPage));
+                    return;
+                }
             }
             catch
             {
